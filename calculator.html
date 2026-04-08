@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f5f5f7;
+            min-height: 100vh;
+            display: grid;
+            place-items: center;
+            padding: 1rem;
+        }
+        .calc {
+            background: #ffffff;
+            border-radius: 20px;
+            padding: 1.5rem;
+            width: min(90vw, 300px);
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06);
+        }
+        input {
+            width: 100%;
+            height: 4rem;
+            font-size: 2rem;
+            font-weight: 400;
+            text-align: end;
+            padding: 0 1rem;
+            margin-bottom: 1rem;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            background: #fafafa;
+            color: #1d1d1f;
+        }
+        input:focus { outline: none; border-color: #007aff; box-shadow: 0 0 0 3px rgba(0,122,255,0.1); }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(5, 3.5rem);
+            gap: 0.75rem;
+        }
+        button {
+            font-size: 1.5rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 14px;
+            background: #f2f2f7;
+            color: #1d1d1f;
+            cursor: pointer;
+            transition: all 0.15s ease-in-out;
+        }
+        button:hover { 
+            background: #e5e5ea;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        button:active { 
+            transform: translateY(0);
+            background: #d1d1d6;
+        }
+        .op { background: #e5f2ff; color: #007aff; }
+        .op:hover { background: #cce7ff; }
+        .eq { background: #e8f5e8; color: #34c759; grid-column: 4; grid-row: 5; }
+        .eq:hover { background: #d4f0d4; }
+        .zero { grid-column: 1 / 3; grid-row: 5; }
+        .reset { background: #fef3f3; color: #ff3b30; }
+        .reset:hover { background: #ffeaea; }
+    </style>
+</head>
+<body>
+    <div class="calc">
+        <input id="scr" readonly>
+        <div class="grid">
+            <button class="reset" onclick="clr()">AC</button>
+            <button class="reset" onclick="del()">DEL</button>
+            <button class="op" onclick="key('/')">÷</button>
+            <button class="op" onclick="key('*')">×</button>
+            <button onclick="key('7')">7</button>
+            <button onclick="key('8')">8</button>
+            <button onclick="key('9')">9</button>
+            <button class="op" onclick="key('-')">-</button>
+            <button onclick="key('4')">4</button>
+            <button onclick="key('5')">5</button>
+            <button onclick="key('6')">6</button>
+            <button class="op" onclick="key('+')">+</button>
+            <button onclick="key('1')">1</button>
+            <button onclick="key('2')">2</button>
+            <button onclick="key('3')">3</button>
+            <button class="zero" onclick="key('0')">0</button>
+            <button onclick="key('.')">.</button>
+            <button class="eq" onclick="res()">=</button>
+        </div>
+    </div>
+    <script>
+        const scr = document.getElementById('scr'), buf = '';
+        let v = '';
+        function key(n) { v += n; scr.value = v; }
+        function clr() { v = ''; scr.value = ''; }
+        function del() { v = v.slice(0,-1); scr.value = v; }
+        function res() {
+            try {
+                const e = v.replace(/×/g,'*').replace(/÷/g,'/');
+                v = eval(e)+''; scr.value = v;
+            } catch { 
+                scr.value = 'Error'; setTimeout(clr,1200); 
+            }
+        }
+        document.addEventListener('keydown',e=>{
+            const k=e.key; e.preventDefault();
+            /[0-9.]/.test(k)?key(k):k==='+'?key('+'):k==='-'?key('-'):k==='*'?key('×'):k==='/'?key('÷'):k==='Enter'||k==='='?res():/^[Cc]$/.test(k)||k==='Escape'?clr():k==='Backspace'?del():0;
+        });
+    </script>
+</body>
+</html>
