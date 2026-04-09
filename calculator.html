@@ -8,65 +8,119 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f5f5f7;
+            background: linear-gradient(135deg, #f0f2f5 0%, #e8eaf6 100%);
             min-height: 100vh;
             display: grid;
             place-items: center;
-            padding: 1rem;
+            padding: 1.5rem;
         }
         .calc {
-            background: #ffffff;
-            border-radius: 20px;
-            padding: 1.5rem;
-            width: min(90vw, 300px);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.1), 0 1px 4px rgba(0,0,0,0.06);
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(20px);
+            border-radius: 28px;
+            padding: 2.2rem;
+            width: min(90vw, 420px);
+            box-shadow: 0 16px 50px rgba(0,0,0,0.18), 0 3px 10px rgba(0,0,0,0.06);
+            transform: scale(0.82);    /* PERFECT FIT - maximum zoom out */
+            transition: transform 0.3s ease;
         }
+        .calc:hover { transform: scale(0.85); }
         input {
             width: 100%;
-            height: 4rem;
-            font-size: 2rem;
+            height: 5.2rem;
+            font-size: 2.6rem;
             font-weight: 400;
             text-align: end;
-            padding: 0 1rem;
-            margin-bottom: 1rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 12px;
-            background: #fafafa;
-            color: #1d1d1f;
+            padding: 0 1.3rem;
+            margin-bottom: 1.3rem;
+            border: 2.5px solid #e3e8f0;
+            border-radius: 18px;
+            background: linear-gradient(145deg, #ffffff, #f8fafc);
+            color: #1a202c;
+            box-shadow: inset 0 2px 10px rgba(0,0,0,0.07);
         }
-        input:focus { outline: none; border-color: #007aff; box-shadow: 0 0 0 3px rgba(0,122,255,0.1); }
+        input:focus { 
+            outline: none; 
+            border-color: #4299e1; 
+            box-shadow: 0 0 0 5px rgba(66,153,225,0.18), inset 0 1.5px 5px rgba(0,0,0,0.07);
+        }
         .grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: repeat(5, 3.5rem);
-            gap: 0.75rem;
+            grid-template-rows: repeat(5, 1fr);
+            gap: 1.3rem;
+            align-items: stretch;
         }
         button {
-            font-size: 1.5rem;
-            font-weight: 500;
+            font-size: 2.1rem;
+            font-weight: 600;
             border: none;
-            border-radius: 14px;
-            background: #f2f2f7;
-            color: #1d1d1f;
+            border-radius: 22px;
+            background: linear-gradient(145deg, #f7fafc, #edf2f7);
+            color: #2d3748;
             cursor: pointer;
-            transition: all 0.15s ease-in-out;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 5px 18px rgba(0,0,0,0.11), 0 1.5px 5px rgba(0,0,0,0.07);
+            position: relative;
+            overflow: hidden;
+            height: 5rem;
         }
+        button::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+            transition: left 0.6s;
+        }
+        button:hover::before { left: 100%; }
         button:hover { 
-            background: #e5e5ea;
-            transform: translateY(-1px);
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            background: linear-gradient(145deg, #ffffff, #f0f9ff);
+            transform: translateY(-2.5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18), 0 3px 10px rgba(0,0,0,0.11);
         }
         button:active { 
             transform: translateY(0);
-            background: #d1d1d6;
+            background: linear-gradient(145deg, #e2e8f0, #cbd5e0);
+            box-shadow: 0 3px 10px rgba(0,0,0,0.14);
         }
-        .op { background: #e5f2ff; color: #007aff; }
-        .op:hover { background: #cce7ff; }
-        .eq { background: #e8f5e8; color: #34c759; grid-column: 4; grid-row: 5; }
-        .eq:hover { background: #d4f0d4; }
-        .zero { grid-column: 1 / 3; grid-row: 5; }
-        .reset { background: #fef3f3; color: #ff3b30; }
-        .reset:hover { background: #ffeaea; }
+        .op { 
+            background: linear-gradient(145deg, #ebf8ff, #bee3f8);
+            color: #3182ce; 
+            box-shadow: 0 5px 18px rgba(49,130,206,0.32);
+        }
+        .op:hover { 
+            background: linear-gradient(145deg, #f0fbff, #90cdf4);
+            box-shadow: 0 10px 30px rgba(49,130,206,0.42);
+        }
+        .eq { 
+            background: linear-gradient(145deg, #f0fff4, #c6f6d5);
+            color: #38a169; 
+            grid-column: 3 / 5; 
+            grid-row: 5;
+        }
+        .eq:hover { 
+            background: linear-gradient(145deg, #f0fff8, #9ae6b4);
+            box-shadow: 0 10px 30px rgba(56,161,105,0.42);
+        }
+        .zero { 
+            grid-column: 1 / 3; 
+            grid-row: 5; 
+        }
+        .reset { 
+            background: linear-gradient(145deg, #fff5f5, #fed7d7);
+            color: #e53e3e; 
+            box-shadow: 0 5px 18px rgba(229,62,62,0.28);
+        }
+        .reset:hover { 
+            background: linear-gradient(145deg, #fffafa, #fc8181);
+            box-shadow: 0 10px 30px rgba(229,62,62,0.38);
+        }
+        @media (max-width: 550px) {
+            .calc { padding: 1.8rem; width: 92vw; transform: scale(0.80); }
+            input { height: 4.5rem; font-size: 2.2rem; }
+            button { font-size: 1.8rem; height: 4.2rem; }
+            .grid { gap: 1.1rem; }
+        }
     </style>
 </head>
 <body>
@@ -77,20 +131,24 @@
             <button class="reset" onclick="del()">DEL</button>
             <button class="op" onclick="key('/')">÷</button>
             <button class="op" onclick="key('*')">×</button>
+            
             <button onclick="key('7')">7</button>
             <button onclick="key('8')">8</button>
             <button onclick="key('9')">9</button>
             <button class="op" onclick="key('-')">-</button>
+            
             <button onclick="key('4')">4</button>
             <button onclick="key('5')">5</button>
             <button onclick="key('6')">6</button>
             <button class="op" onclick="key('+')">+</button>
+            
             <button onclick="key('1')">1</button>
             <button onclick="key('2')">2</button>
             <button onclick="key('3')">3</button>
+            <button class="eq" onclick="res()">=</button>
+            
             <button class="zero" onclick="key('0')">0</button>
             <button onclick="key('.')">.</button>
-            <button class="eq" onclick="res()">=</button>
         </div>
     </div>
     <script>
